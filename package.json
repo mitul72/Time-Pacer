@@ -16,10 +16,15 @@
     "@tauri-apps/api": "^1.4.0",
     "babel-plugin-macros": "^3.1.0",
     "bootstrap": "^5.3.1",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
-    "react-fontawesome": "^1.7.1"
+    "react-fontawesome": "^1.7.1",
+    "react-router-dom": "^6.14.2",
+    "sass": "^1.64.2",
+    "sort-by": "^1.2.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.4.0",

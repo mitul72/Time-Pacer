@@ -1,15 +1,20 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
 import Home from "./components/Home";
 import Navbar from "./components/common/Navbar";
+import {Routes, Route} from 'react-router-dom';
+import Builder from "./components/Builder";
+
 
 function App() {
   return (
     <>
       <Navbar/>
       <main>
-      <Home/>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="day"/>
+          <Route path="build" element={<Builder/>}/>
+        </Routes>
       </main>
     </>
   );

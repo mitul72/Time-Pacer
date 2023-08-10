@@ -4,6 +4,8 @@
   --text-secondary: #f9eae1;
   font-size: 16px;
   --transition-speed: 600ms;
+  --button-primary: #3274b3;
+  --button-click: #324e68;
 }
 nav {
   width: 5rem;
@@ -21,10 +23,24 @@ nav > * {
   border-radius: 5px;
 }
 .navIcon {
+  cursor: pointer;
+
   /* padding: 10px; */
   display: flex;
+  transition: padding var(--transition-speed), margin 200ms, width 200ms,
+    background-color 100ms;
   flex-direction: column;
   gap: 6px;
+  width: 30px;
+}
+.NavOpen {
+  cursor: pointer;
+  width: 30px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #1c1c1ca4;
+  border-radius: 10px;
+  align-items: center;
 }
 .navbar-nav {
   list-style: none;
@@ -46,6 +62,7 @@ nav > * {
 .nav-link {
   display: flex;
   align-items: center;
+  /* justify-content: space-between; */
   height: 5rem;
   color: var(--bg-secondary);
   text-decoration: none;
@@ -59,15 +76,61 @@ nav > * {
   filter: grayscale(0%) opacity(1);
   background: #1c1c1c;
 }
-nav:hover {
+.navHover {
   width: 16rem;
-  background-color: #1e1e1e;
+  /* background-color: #1e1e1e; */
+  background-color: #1e1f22;
 }
-nav:hover .link-text {
+.navHover .link-text {
   display: block;
   white-space: nowrap;
+}
+nav {
+  background-color: #1e1f22;
 }
 main {
   margin-left: 5rem;
   padding: 1rem;
+}
+body {
+  margin: 3px;
+}
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+main {
+  /* color: #ebdfd4; */
+  color: var(--text-secondary);
+  margin-left: 7rem;
+}
+.daily-text {
+  margin-top: 40px;
+  background-color: #383838;
+  padding: 15px;
+  width: calc(80vw - 5rem);
+  border-radius: 10px;
+}
+.button {
+  background-color: var(--button-primary);
+}
+.button:active {
+  background-color: var(--button-click);
+  border: 1px solid var(--button-click);
+}
+
+.daily-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown {
+  width: 150px;
+  background-color: #272727;
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
