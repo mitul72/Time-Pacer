@@ -1,10 +1,10 @@
-#Time Pacer App 🕰️
+# Time Pacer App 🕰️
 
 Time Pacer is a powerful ⏰ time management app designed to help users organize their schedules, create time tables 📅, and efficiently manage their tasks 📝. Whether you're a student 🎓, professional 👩‍💼, or anyone looking to make the most of their time ⏳, Time Pacer is here to streamline your daily routine.
 
 Built using Tauri.js 🚀, Time Pacer offers a seamless and intuitive user experience across multiple platforms 🖥️📱, combining the power of web technologies with the flexibility of native applications.
 
-##Features ✨
+## Features ✨
 
 Create Time Tables: Easily create personalized time tables by specifying time slots ⏲️, activities 🏋️‍♀️, and priorities 🚦. Organize your day the way you want.
 
@@ -18,7 +18,7 @@ Notifications: Receive timely reminders ⏰ and notifications 📬 for upcoming 
 
 Cross-Platform: Time Pacer is built using Tauri.js 🚀, enabling seamless performance across Windows 🪟, macOS 🍏, and Linux 🐧 operating systems.
 
-##Getting Started 🚀
+## Getting Started 🚀
 
 To get started with Time Pacer, follow these steps:
 
@@ -28,7 +28,7 @@ Install the app on your platform.
 
 Launch Time Pacer.
 
-##Contributing 🤝
+## Contributing 🤝
 
 We welcome contributions from the open-source community! If you have suggestions for new features, bug fixes 🐞, or enhancements 💡, please submit an issue or pull request.
 
@@ -40,7 +40,8 @@ Provide clear and concise documentation for your contributions 📚.
 License 📝
 This project is licensed under the MIT License.
 
-Contact 📬
+## Contact 📬
+
 If you have any questions, feedback 🗣️, or need assistance, please reach out to our team at support@timepacerapp.com.
 
 Happy time managing with Time Pacer! 🚀 ⏰
