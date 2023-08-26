@@ -12,7 +12,9 @@ nav {
   height: 100vh;
   position: fixed;
   transition: width 200ms ease;
+  z-index: 10;
 }
+
 nav > * {
   margin: 20px;
 }
@@ -112,6 +114,7 @@ main {
   width: calc(80vw - 5rem);
   border-radius: 10px;
 }
+
 .button {
   background-color: var(--button-primary);
 }
@@ -127,10 +130,32 @@ main {
 }
 
 .dropdown {
-  width: 150px;
+  appearance: none;
+  width: 160px;
   background-color: #272727;
   color: var(--text-secondary);
   border-radius: 10px;
-  padding: 5px;
+  padding: 6px 12px;
+  font-size: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+.select-container {
+  /* display: flex; */
+  /* justify-content: center; */
+  position: relative;
+  max-width: fit-content;
+}
+
+.down-icon {
+  width: 8px;
+  position: absolute;
+  /* right: 0; */
+  pointer-events: none;
+  top: 7px;
+  right: 10px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 }

@@ -23,11 +23,12 @@
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-router-dom": "^6.14.2",
-    "sass": "^1.64.2",
+    "sass": "^1.65.1",
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.4.0",
+    "@types/bootstrap": "^5.2.6",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
