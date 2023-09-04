@@ -7,6 +7,7 @@
   --button-primary: #3274b3;
   --button-click: #324e68;
 }
+
 nav {
   width: 5rem;
   height: 100vh;
@@ -16,10 +17,12 @@ nav {
 }
 
 table input {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 5px;
   width: 100%;
   height: 100%;
+  background-color: var(--bg-secondary);
+  border-radius: 0;
 }
 
 nav > * {
@@ -31,6 +34,24 @@ nav > * {
   background-color: var(--text-secondary);
   border-radius: 5px;
 }
+#task {
+  width: 55vw;
+}
+.star {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 29px; */
+  height: 29px;
+  border: none;
+}
+
+AiFillStar,
+AiOutlineStar {
+  margin: 0;
+}
+
 .navIcon {
   cursor: pointer;
 
@@ -121,7 +142,25 @@ main {
   width: calc(80vw - 5rem);
   border-radius: 10px;
 }
+.schedule-button {
+  width: 77vw;
+  display: flex;
+  justify-content: space-between;
+}
+.buttons {
+  display: flex;
+  gap: 7px;
+}
 
+.schedule-button button {
+  /* font-size: 20px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 .button {
   background-color: var(--button-primary);
 }
@@ -129,7 +168,14 @@ main {
   background-color: var(--button-click);
   border: 1px solid var(--button-click);
 }
-
+.minus {
+  background-color: #bd393d;
+  border: none;
+}
+.minus:active {
+  background-color: var(--bg-red-secondary);
+  border: 1px solid var(--bg-red-secondary);
+}
 .daily-text {
   display: flex;
   align-items: center;
@@ -149,8 +195,6 @@ main {
 }
 
 .select-container {
-  /* display: flex; */
-  /* justify-content: center; */
   position: relative;
   max-width: fit-content;
 }
@@ -158,23 +202,34 @@ main {
 .down-icon {
   width: 8px;
   position: absolute;
-  /* right: 0; */
   pointer-events: none;
   top: 7px;
   right: 10px;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
 }
 table,
 th,
 td {
   border: 1px solid rgb(96, 94, 94);
   border-collapse: collapse;
-  /* border-radius: 10px; */
 }
+
 table {
   margin-top: 2vh;
-  width: 70vw;
-  height: 20vh;
+}
+.star * {
+  cursor: pointer;
+}
+table select {
+  width: 170px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+select::-webkit-scrollbar {
+  display: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+td {
+  padding: 0 !important;
 }

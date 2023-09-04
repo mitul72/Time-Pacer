@@ -1,6 +1,13 @@
-import React from "react";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
-export default function Table() {
+type TableProps = {
+  rows: number;
+};
+
+function getTimeSlots() {
   let x = 60; //minutes interval
   let times = []; // time array
   let tt = 0; // start time
@@ -21,36 +28,77 @@ export default function Table() {
       ap[Math.floor(hh / 12)]; // pushing data in array in [00:00 - 12:00 AM/PM format]
     tt = tt + x;
   }
+  return times;
+}
+function getInvervals() {
+  let times = getTimeSlots();
+  let slots = [];
+  for (let i = 0; i < times.length; i++) {
+    if (i == times.length - 1) {
+      slots[i] = (
+        <option>
+          {times[i]} - {times[0]}
+        </option>
+      );
+      return slots;
+    }
+    slots[i] = (
+      <option>
+        {times[i]} - {times[i + 1]}
+      </option>
+    );
+  }
+}
+function GetRows() {
+  const [Star, setStar] = useState(false);
+  let times = getInvervals();
+  return (
+    <tr>
+      <td>
+        <div className="select-container">
+          <select className="dropdown">{times}</select>
+          <FontAwesomeIcon className="down-icon" icon={faCaretDown} />
+        </div>
+      </td>
+      <td>
+        <input type="text" name="" id="task" />
+      </td>
+      <td className="star priority">
+        {Star ? (
+          <AiFillStar
+            onClick={() => {
+              setStar(false);
+            }}
+            size={25}
+          />
+        ) : (
+          <AiOutlineStar
+            onClick={() => {
+              setStar(true);
+            }}
+            size={25}
+          />
+        )}
+      </td>
+    </tr>
+  );
+}
 
+export default function Table(props: TableProps) {
+  let rows = [];
+  for (let i = 0; i < props.rows; i++) {
+    rows.push(<GetRows />);
+  }
   return (
     <table>
       <thead>
         <tr>
           <th>Time Slot</th>
           <th>Task</th>
-          <th>Priority</th>
+          <th className="priority">Priority</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>{times[0]}</td>
-          <td>
-            <input type="text" name="" id="" />
-          </td>
-          <td>text1.3</td>
-        </tr>
-        <tr>
-          <td>text2.1</td>
-          <td>text2.2</td>
-          <td>text2.3</td>
-        </tr>
-        <tr>
-          <td>text3.1</td>
-          <td>text3.2</td>
-          <td>text3.3</td>
-        </tr>
-        <tr></tr>
-      </tbody>
+      <tbody>{rows}</tbody>
     </table>
   );
 }
