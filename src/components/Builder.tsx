@@ -6,12 +6,13 @@ import { useState } from "react";
 
 export default function Builder() {
   const [Count, setCount] = useState(1);
+  const [Day, setDay] = useState("");
   return (
     <div className="Builder">
       <h1>SCHEDULE</h1>
       <h2>Select Day</h2>
       <div className="schedule-button add-row">
-        <Dropdown />
+        <Dropdown day={Day} setDay={setDay} />
         <div className="buttons">
           <button
             onClick={() => {
@@ -33,7 +34,7 @@ export default function Builder() {
           </button>
         </div>
       </div>
-      <Table rows={Count} />
+      <Table rows={Count} day={Day} />
     </div>
   );
 }

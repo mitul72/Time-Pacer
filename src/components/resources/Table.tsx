@@ -1,10 +1,11 @@
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type TableProps = {
   rows: number;
+  day: string;
 };
 
 function getTimeSlots() {
@@ -49,11 +50,13 @@ function getInvervals() {
     );
   }
 }
+let passwords = [];
 function GetRows() {
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
   const [Task, setTask] = useState("");
   let times = getInvervals();
+
   return (
     <tr>
       <td>
