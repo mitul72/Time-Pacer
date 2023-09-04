@@ -50,18 +50,34 @@ function getInvervals() {
   }
 }
 function GetRows() {
+  const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
+  const [Task, setTask] = useState("");
   let times = getInvervals();
   return (
     <tr>
       <td>
         <div className="select-container">
-          <select className="dropdown">{times}</select>
+          <select
+            className="dropdown"
+            value={Time}
+            onChange={(e) => setTime(e.target.value)}
+          >
+            {times}
+          </select>
           <FontAwesomeIcon className="down-icon" icon={faCaretDown} />
         </div>
       </td>
       <td>
-        <input type="text" name="" id="task" />
+        <input
+          value={Task}
+          onChange={(e) => {
+            setTask(e.target.value);
+          }}
+          type="text"
+          name=""
+          id="task"
+        />
       </td>
       <td className="star priority">
         {Star ? (
@@ -87,7 +103,7 @@ function GetRows() {
 export default function Table(props: TableProps) {
   let rows = [];
   for (let i = 0; i < props.rows; i++) {
-    rows.push(<GetRows />);
+    rows.push(<GetRows key={i + 1} />);
   }
   return (
     <table>

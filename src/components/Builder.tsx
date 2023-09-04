@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export default function Builder() {
   const [Count, setCount] = useState(1);
-
   return (
     <div className="Builder">
       <h1>SCHEDULE</h1>
