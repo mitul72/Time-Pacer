@@ -2,6 +2,7 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { key } from "localforage";
 
 type TableProps = {
   rows: number;
@@ -50,12 +51,26 @@ function getInvervals() {
     );
   }
 }
-let passwords = [];
-function GetRows() {
+let passwords = localStorage.getItem("passwords");
+type rowProps = {
+  id: number;
+};
+function GetRows(props: rowProps) {
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
   const [Task, setTask] = useState("");
   let times = getInvervals();
+  useEffect(() => {
+    if (passwords == null) {
+      let json = [];
+      json.push({ time: Time, task: Task, star: Star, key: props.id });
+      localStorage.setItem("passwords", JSON.stringify(json));
+    } else {
+      let json = JSON.parse(localStorage.getItem("passwords"));
+      json.push({ time: Time, task: Task, star: Star, key: props.id });
+      localStorage.setItem("passwords", JSON.stringify(json));
+    }
+  }, [Time, Task]);
 
   return (
     <tr>
@@ -106,7 +121,7 @@ function GetRows() {
 export default function Table(props: TableProps) {
   let rows = [];
   for (let i = 0; i < props.rows; i++) {
-    rows.push(<GetRows key={i + 1} />);
+    rows.push(<GetRows id={i + 1} key={i + 1} />);
   }
   return (
     <table>
