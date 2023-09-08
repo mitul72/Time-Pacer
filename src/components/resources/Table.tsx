@@ -3,6 +3,7 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
+// Specifying type for the Table component
 type TableProps = {
   rows: number;
 };
@@ -30,6 +31,8 @@ function getTimeSlots() {
   }
   return times;
 }
+
+// Returns the time slots in option tags and formats it
 function getInvervals() {
   let times = getTimeSlots();
   let slots = [];
@@ -49,6 +52,8 @@ function getInvervals() {
     );
   }
 }
+
+// Returns a single row for table
 function GetRows() {
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
@@ -102,6 +107,7 @@ function GetRows() {
 
 export default function Table(props: TableProps) {
   let rows = [];
+  // Get all rows and store into rows array
   for (let i = 0; i < props.rows; i++) {
     rows.push(<GetRows key={i + 1} />);
   }

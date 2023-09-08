@@ -14,7 +14,10 @@ export default function Dropdown({}) {
     6: "Saturday",
   };
   const displayDays = [];
+
+  // Add days to display days array
   for (let key in days) {
+    // Set current day as selected
     if (key === d.getDay().toString()) {
       displayDays.push(
         <option selected value={key}>
