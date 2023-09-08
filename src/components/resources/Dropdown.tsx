@@ -18,7 +18,10 @@ export default function Dropdown(props: DropDownProps) {
     6: "Saturday",
   };
   const displayDays = [];
+
+  // Add days to display days array
   for (let key in days) {
+    // Set current day as selected
     if (key === d.getDay().toString()) {
       useEffect(() => {
         props.setDay(days[parseInt(key) as keyof typeof days]);

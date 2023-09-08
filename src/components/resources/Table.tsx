@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { key } from "localforage";
 
+// Specifying type for the Table component
 type TableProps = {
   rows: number;
   day: string;
@@ -32,6 +33,8 @@ function getTimeSlots() {
   }
   return times;
 }
+
+// Returns the time slots in option tags and formats it
 function getInvervals() {
   let times = getTimeSlots();
   let slots = [];
@@ -51,11 +54,9 @@ function getInvervals() {
     );
   }
 }
-let passwords = localStorage.getItem("passwords");
-type rowProps = {
-  id: number;
-};
-function GetRows(props: rowProps) {
+
+// Returns a single row for table
+function GetRows() {
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
   const [Task, setTask] = useState("");
@@ -120,6 +121,7 @@ function GetRows(props: rowProps) {
 
 export default function Table(props: TableProps) {
   let rows = [];
+  // Get all rows and store into rows array
   for (let i = 0; i < props.rows; i++) {
     rows.push(<GetRows id={i + 1} key={i + 1} />);
   }
