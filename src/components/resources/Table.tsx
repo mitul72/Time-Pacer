@@ -3,6 +3,7 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { key } from "localforage";
+import Connection from "../../lib/Data";
 
 type TableProps = {
   rows: number;
@@ -54,23 +55,26 @@ function getInvervals() {
 let passwords = localStorage.getItem("passwords");
 type rowProps = {
   id: number;
+  day: string;
 };
+
 function GetRows(props: rowProps) {
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
   const [Task, setTask] = useState("");
   let times = getInvervals();
   useEffect(() => {
-    if (passwords == null) {
-      let json = [];
-      json.push({ time: Time, task: Task, star: Star, key: props.id });
-      localStorage.setItem("passwords", JSON.stringify(json));
-    } else {
-      let json = JSON.parse(localStorage.getItem("passwords"));
-      json.push({ time: Time, task: Task, star: Star, key: props.id });
-      localStorage.setItem("passwords", JSON.stringify(json));
-    }
-  }, [Time, Task]);
+    const con: Connection = new Connection();
+    const db_con = async () => {
+      await con.init();
+      await con.create(props.day);
+      await con.insert_values(props.day, props.id, Time, Task, Star);
+      await con.update_value(props.day, props.id, Time, Task, Star);
+      let i = await con.select(props.day);
+      console.log(i);
+    };
+    db_con();
+  }, [Time, Task, Star]);
 
   return (
     <tr>
@@ -121,7 +125,7 @@ function GetRows(props: rowProps) {
 export default function Table(props: TableProps) {
   let rows = [];
   for (let i = 0; i < props.rows; i++) {
-    rows.push(<GetRows id={i + 1} key={i + 1} />);
+    rows.push(<GetRows id={i + 1} day={props.day} key={i + 1} />);
   }
   return (
     <table>
