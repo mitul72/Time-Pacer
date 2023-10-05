@@ -9,24 +9,24 @@ class Connection {
     this.db = await Database.load('sqlite:test.db');
   }
   async create(day: string) {
-    await this.db.execute('CREATE TABLE IF NOT EXISTS $1 (id INT PRIMARY KEY, time TEXT, task TEXT, star BOOL);', [day]);
+    await this.db.execute(`CREATE TABLE IF NOT EXISTS ${day} (id INT PRIMARY KEY, time TEXT, task TEXT, star BOOL);`);
   }
   async insert_values(day: string, id:Number, time: string, task:string, star:boolean){
-    await this.db.execute('INSERT INTO $1 VALUES ($2, $3, $4, $5)', [day, id, time, task, star])
+    await this.db.execute(`INSERT INTO ${day} VALUES (${id}, ${time}, ${task}, ${star})`)
   }
   async update_value(day: string, id:Number, time: string, task:string, star:boolean) {
     /** batch execution SQL with params */
-    await this.db.execute('UPDATE $1 set time=$2, task=$3, star=$4 where id=$5', [day, time, task, star, id])
+    await this.db.execute(`UPDATE ${day} set time=${time}, task=${task}, star=${star} where id=${id}`)
   }
 
   async count_day(day: string) {
     /** select count */
-    const rows = await this.db.select<Array<{ count: number }>>('SELECT COUNT(*) as count FROM $1', [day])
+    const rows = await this.db.select<Array<{ count: number }>>(`SELECT COUNT(*) as count FROM ${day}`)
     return rows;
   }
   async select(day: string) {
     /** select with param */
-    const rows = await this.db.select<Array<{ day: string, id:Number, time: string, task:string, star:boolean }>>('SELECT name FROM $1', [day])
+    const rows = await this.db.select<Array<{ day: string, id:Number, time: string, task:string, star:boolean }>>(`SELECT * FROM ${day}`)
     return rows;
   }
   async close() {

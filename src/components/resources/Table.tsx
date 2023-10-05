@@ -66,12 +66,24 @@ function GetRows(props: rowProps) {
   useEffect(() => {
     const con: Connection = new Connection();
     const db_con = async () => {
-      await con.init();
-      await con.create(props.day);
-      await con.insert_values(props.day, props.id, Time, Task, Star);
-      await con.update_value(props.day, props.id, Time, Task, Star);
-      let i = await con.select(props.day);
-      console.log(i);
+      try {
+        await con.init();
+        con.create(props.day);
+        con.insert_values(props.day, props.id, Time, Task, Star);
+        con.update_value(props.day, props.id, Time, Task, Star);
+        con
+          .select(props.day)
+          .then((i) => {
+            console.log(i);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+        // console.log(i);
+      } catch (error) {
+        // console.log("ji");
+        console.error("Error:", error);
+      }
     };
     db_con();
   }, [Time, Task, Star]);
