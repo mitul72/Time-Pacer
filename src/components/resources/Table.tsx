@@ -52,11 +52,11 @@ function getInvervals() {
     );
   }
 }
-let passwords = localStorage.getItem("passwords");
 type rowProps = {
   id: number;
   day: string;
 };
+let data_load: any = [];
 
 function GetRows(props: rowProps) {
   const [Time, setTime] = useState("12:00AM - 01:00AM");
@@ -74,7 +74,7 @@ function GetRows(props: rowProps) {
         con
           .select(props.day)
           .then((i) => {
-            console.log(i);
+            data_load = i;
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -87,6 +87,13 @@ function GetRows(props: rowProps) {
     };
     db_con();
   }, [Time, Task, Star]);
+  console.log(data_load);
+  let task: string = "";
+  try {
+    task = data_load[props.id - 1].task;
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <tr>

@@ -9,14 +9,18 @@ class Connection {
     this.db = await Database.load('sqlite:test.db');
   }
   async create(day: string) {
-    await this.db.execute(`CREATE TABLE IF NOT EXISTS ${day} (id INT PRIMARY KEY, time TEXT, task TEXT, star BOOL);`);
+    try {
+      await this.db.execute(`CREATE TABLE IF NOT EXISTS ${day} (id INT PRIMARY KEY, time TEXT, task TEXT, star BOOL)`);
+  } catch (error) {
+      console.error('Error creating table:', error);
   }
+}
   async insert_values(day: string, id:Number, time: string, task:string, star:boolean){
-    await this.db.execute(`INSERT INTO ${day} VALUES (${id}, ${time}, ${task}, ${star})`)
+    await this.db.execute(`INSERT INTO ${day} VALUES (${id}, '${time}', '${task}', ${star})`)
   }
   async update_value(day: string, id:Number, time: string, task:string, star:boolean) {
     /** batch execution SQL with params */
-    await this.db.execute(`UPDATE ${day} set time=${time}, task=${task}, star=${star} where id=${id}`)
+    await this.db.execute(`UPDATE ${day} set time='${time}', task='${task}', star=${star} where id=${id}`)
   }
 
   async count_day(day: string) {
