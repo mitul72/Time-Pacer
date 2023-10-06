@@ -2,12 +2,13 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { key } from "localforage";
 import Connection from "../../lib/Data";
 
 type TableProps = {
   rows: number;
   day: string;
+  removeLast: any;
+  setRemoveLast: any;
 };
 
 function getTimeSlots() {
@@ -55,8 +56,11 @@ function getInvervals() {
 type rowProps = {
   id: number;
   day: string;
+  removeLast: any;
+  setRemoveLast: any;
 };
 let data_load: any = [];
+const con: Connection = new Connection();
 
 function GetRows(props: rowProps) {
   const [Time, setTime] = useState("12:00AM - 01:00AM");
@@ -64,7 +68,16 @@ function GetRows(props: rowProps) {
   const [Task, setTask] = useState("");
   let times = getInvervals();
   useEffect(() => {
-    const con: Connection = new Connection();
+    try {
+      if (props.removeLast) {
+        con.remove_last_entry(props.day);
+        props.setRemoveLast(false);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [props.removeLast]);
+  useEffect(() => {
     const db_con = async () => {
       try {
         await con.init();
@@ -79,6 +92,15 @@ function GetRows(props: rowProps) {
           .catch((error) => {
             console.error("Error:", error);
           });
+        con
+          .count_day(props.day)
+          .then((i) => {
+            console.log(i);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
         // console.log(i);
       } catch (error) {
         // console.log("ji");
@@ -88,12 +110,13 @@ function GetRows(props: rowProps) {
     db_con();
   }, [Time, Task, Star]);
   console.log(data_load);
-  let task: string = "";
-  try {
-    task = data_load[props.id - 1].task;
-  } catch (error) {
-    console.log(error);
-  }
+  // useEffect(() => {
+  //   try {
+  //     setTask(data_load[0].task);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, []);
 
   return (
     <tr>
@@ -144,7 +167,15 @@ function GetRows(props: rowProps) {
 export default function Table(props: TableProps) {
   let rows = [];
   for (let i = 0; i < props.rows; i++) {
-    rows.push(<GetRows id={i + 1} day={props.day} key={i + 1} />);
+    rows.push(
+      <GetRows
+        id={i + 1}
+        day={props.day}
+        key={i + 1}
+        removeLast={props.removeLast}
+        setRemoveLast={props.setRemoveLast}
+      />
+    );
   }
   return (
     <table>

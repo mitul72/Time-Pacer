@@ -23,6 +23,10 @@ class Connection {
     await this.db.execute(`UPDATE ${day} set time='${time}', task='${task}', star=${star} where id=${id}`)
   }
 
+  async remove_last_entry(day:string){
+    await this.db.execute(`DELETE FROM ${day} WHERE id = (SELECT MAX(id) FROM ${day})`);
+  }
+
   async count_day(day: string) {
     /** select count */
     const rows = await this.db.select<Array<{ count: number }>>(`SELECT COUNT(*) as count FROM ${day}`)
