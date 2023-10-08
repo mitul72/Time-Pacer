@@ -35,12 +35,17 @@ export default function Builder() {
           </button>
         </div>
       </div>
-      <Table
-        rows={Count}
-        day={Day}
-        setRemoveLast={setRemoveLast}
-        removeLast={RemoveLast}
-      />
+      {Day && Count ? (
+        <Table
+          rows={Count}
+          day={Day}
+          setRemoveLast={setRemoveLast}
+          removeLast={RemoveLast}
+          setRows={setCount}
+        />
+      ) : (
+        <div>loading data....</div>
+      )}
     </div>
   );
 }

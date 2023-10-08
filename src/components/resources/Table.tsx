@@ -1,7 +1,7 @@
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Connection from "../../lib/Data";
 
 type TableProps = {
@@ -9,6 +9,7 @@ type TableProps = {
   day: string;
   removeLast: any;
   setRemoveLast: any;
+  setRows: any;
 };
 
 function getTimeSlots() {
@@ -59,13 +60,14 @@ type rowProps = {
   removeLast: any;
   setRemoveLast: any;
 };
-let data_load: any = [];
+// type Dictionary = {
+//   [key: string]: any;
+// };
+
+let data_load: any;
 const con: Connection = new Connection();
 
 function GetRows(props: rowProps) {
-  const [Time, setTime] = useState("12:00AM - 01:00AM");
-  const [Star, setStar] = useState(false);
-  const [Task, setTask] = useState("");
   let times = getInvervals();
   useEffect(() => {
     try {
@@ -77,39 +79,61 @@ function GetRows(props: rowProps) {
       console.error(e);
     }
   }, [props.removeLast]);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const db_con = async () => {
+      try {
+        await con.init();
+        con.create(props.day);
+        con
+          .select_with_id(props.day, props.id)
+          .then((i) => {
+            if (i.length > 0) {
+              data_load = i;
+              console.log(i);
+              if (i[0].task) {
+                setTask(i[0].task);
+                setTime(i[0].time);
+                setStar(i[0].star);
+              }
+            }
+          })
+          .catch((e) => {
+            console.log(props.day);
+            console.error(e);
+          });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    db_con();
+    console.log(data_load);
+  }, []);
+  const [Time, setTime] = useState("12:00AM - 01:00AM");
+  const [Star, setStar] = useState(false);
+  const [Task, setTask] = useState("");
+
+  useLayoutEffect(() => {
     const db_con = async () => {
       try {
         await con.init();
         con.create(props.day);
         con.insert_values(props.day, props.id, Time, Task, Star);
-        con.update_value(props.day, props.id, Time, Task, Star);
-        con
-          .select(props.day)
-          .then((i) => {
-            data_load = i;
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-        con
-          .count_day(props.day)
-          .then((i) => {
-            console.log(i);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-
-        // console.log(i);
+        if (Task) con.update_value(props.day, props.id, Time, Task, Star);
       } catch (error) {
-        // console.log("ji");
         console.error("Error:", error);
       }
     };
     db_con();
   }, [Time, Task, Star]);
-  console.log(data_load);
+  useLayoutEffect(() => {
+    // if (data_load.length > 0) {
+    //   setTime(data_load[0].time);
+    //   setTask(data_load[0].task);
+    //   setStar(data_load[0].star);
+    // }
+    console.log(data_load);
+  }, []);
+
   // useEffect(() => {
   //   try {
   //     setTask(data_load[0].task);
@@ -163,9 +187,23 @@ function GetRows(props: rowProps) {
     </tr>
   );
 }
-
 export default function Table(props: TableProps) {
   let rows = [];
+  useLayoutEffect(() => {
+    const db_con = async () => {
+      try {
+        await con.init();
+        con.create(props.day);
+        con.count_day(props.day).then((i) => {
+          props.setRows(i[0].count || 1);
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    db_con();
+  }, []);
+
   for (let i = 0; i < props.rows; i++) {
     rows.push(
       <GetRows

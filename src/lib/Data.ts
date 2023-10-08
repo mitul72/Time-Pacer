@@ -37,6 +37,13 @@ class Connection {
     const rows = await this.db.select<Array<{ day: string, id:Number, time: string, task:string, star:boolean }>>(`SELECT * FROM ${day}`)
     return rows;
   }
+  async select_with_id(day: string,id:Number) {
+    /** select with param */
+    console.log(`SELECT * FROM ${day} where id=${id||1}`)
+    const rows = await this.db.select<Array<{ day: string, id:Number, time: string, task:string, star:boolean }>>(`SELECT * FROM ${day} where id=${id}`)
+    return rows;
+  }
+
   async close() {
     /** close sqlite database */
     await this.db.close()
