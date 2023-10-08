@@ -3,7 +3,9 @@ import Dropdown from "./resources/Dropdown";
 import Table from "./resources/Table";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import Connection from "../lib/Data";
 export default function Builder() {
+  const con: Connection = new Connection();
   const [RemoveLast, setRemoveLast] = useState(false);
   const [Count, setCount] = useState(1);
   const [Day, setDay] = useState("");
@@ -26,7 +28,13 @@ export default function Builder() {
             onClick={() => {
               if (Count > 1) {
                 setCount(Count - 1);
-                setRemoveLast(true);
+                // setRemoveLast(true);
+                const remove_last_entry = async () => {
+                  await con.init();
+                  con.create(Day);
+                  con.remove_last_entry(Day);
+                };
+                remove_last_entry();
               }
             }}
             className="button minus"
@@ -36,13 +44,7 @@ export default function Builder() {
         </div>
       </div>
       {Day && Count ? (
-        <Table
-          rows={Count}
-          day={Day}
-          setRemoveLast={setRemoveLast}
-          removeLast={RemoveLast}
-          setRows={setCount}
-        />
+        <Table rows={Count} day={Day} setRows={setCount} />
       ) : (
         <div>loading data....</div>
       )}

@@ -7,8 +7,6 @@ import Connection from "../../lib/Data";
 type TableProps = {
   rows: number;
   day: string;
-  removeLast: any;
-  setRemoveLast: any;
   setRows: any;
 };
 
@@ -57,8 +55,6 @@ function getInvervals() {
 type rowProps = {
   id: number;
   day: string;
-  removeLast: any;
-  setRemoveLast: any;
 };
 // type Dictionary = {
 //   [key: string]: any;
@@ -69,16 +65,6 @@ const con: Connection = new Connection();
 
 function GetRows(props: rowProps) {
   let times = getInvervals();
-  useEffect(() => {
-    try {
-      if (props.removeLast) {
-        con.remove_last_entry(props.day);
-        props.setRemoveLast(false);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, [props.removeLast]);
   useLayoutEffect(() => {
     const db_con = async () => {
       try {
@@ -205,15 +191,7 @@ export default function Table(props: TableProps) {
   }, []);
 
   for (let i = 0; i < props.rows; i++) {
-    rows.push(
-      <GetRows
-        id={i + 1}
-        day={props.day}
-        key={i + 1}
-        removeLast={props.removeLast}
-        setRemoveLast={props.setRemoveLast}
-      />
-    );
+    rows.push(<GetRows id={i + 1} day={props.day} key={i + 1} />);
   }
   return (
     <table>
