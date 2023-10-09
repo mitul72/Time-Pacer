@@ -56,9 +56,6 @@ type rowProps = {
   id: number;
   day: string;
 };
-// type Dictionary = {
-//   [key: string]: any;
-// };
 
 let data_load: any;
 const con: Connection = new Connection();
@@ -93,7 +90,7 @@ function GetRows(props: rowProps) {
     };
     db_con();
     console.log(data_load);
-  }, []);
+  }, [props.day]);
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
   const [Task, setTask] = useState("");
@@ -104,29 +101,13 @@ function GetRows(props: rowProps) {
         await con.init();
         con.create(props.day);
         con.insert_values(props.day, props.id, Time, Task, Star);
-        if (Task) con.update_value(props.day, props.id, Time, Task, Star);
+        con.update_value(props.day, props.id, Time, Task, Star);
       } catch (error) {
         console.error("Error:", error);
       }
     };
     db_con();
   }, [Time, Task, Star]);
-  useLayoutEffect(() => {
-    // if (data_load.length > 0) {
-    //   setTime(data_load[0].time);
-    //   setTask(data_load[0].task);
-    //   setStar(data_load[0].star);
-    // }
-    console.log(data_load);
-  }, []);
-
-  // useEffect(() => {
-  //   try {
-  //     setTask(data_load[0].task);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
 
   return (
     <tr>
@@ -188,7 +169,7 @@ export default function Table(props: TableProps) {
       }
     };
     db_con();
-  }, []);
+  }, [props.day]);
 
   for (let i = 0; i < props.rows; i++) {
     rows.push(<GetRows id={i + 1} day={props.day} key={i + 1} />);
