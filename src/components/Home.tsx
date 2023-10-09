@@ -22,6 +22,7 @@ export default function Home() {
           ) : (
             <Tasks />
           )}
+          <Tasks />
         </div>
       </section>
     </div>
