@@ -1,8 +1,11 @@
-import Table from "react-bootstrap/Table";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-export default function Dropdown({}) {
+import { useEffect } from "react";
+type DropDownProps = {
+  day: string;
+  setDay: any;
+};
+export default function Dropdown(props: DropDownProps) {
   const d = new Date();
   const days = {
     0: "Sunday",
@@ -19,6 +22,10 @@ export default function Dropdown({}) {
   for (let key in days) {
     // Set current day as selected
     if (key === d.getDay().toString()) {
+      useEffect(() => {
+        props.setDay(days[parseInt(key) as keyof typeof days]);
+      }, []);
+
       displayDays.push(
         <option selected value={key}>
           {days[parseInt(key) as keyof typeof days]}
@@ -31,7 +38,14 @@ export default function Dropdown({}) {
   }
   return (
     <div className="select-container">
-      <select className="dropdown">{displayDays}</select>
+      <select
+        className="dropdown"
+        onChange={(e) =>
+          props.setDay(days[parseInt(e.target.value) as keyof typeof days])
+        }
+      >
+        {displayDays}
+      </select>
       <FontAwesomeIcon className="down-icon" icon={faCaretDown} />
     </div>
   );

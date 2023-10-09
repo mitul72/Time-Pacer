@@ -1,11 +1,14 @@
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import Connection from "../../lib/Data";
 
 // Specifying type for the Table component
 type TableProps = {
   rows: number;
+  day: string;
+  setRows: any;
 };
 
 function getTimeSlots() {
@@ -52,13 +55,56 @@ function getInvervals() {
     );
   }
 }
+type rowProps = {
+  id: number;
+  day: string;
+};
 
-// Returns a single row for table
-function GetRows() {
+const con: Connection = new Connection();
+
+function GetRows(props: rowProps) {
+  let times = getInvervals();
+  useLayoutEffect(() => {
+    const db_con = async () => {
+      try {
+        await con.init();
+        con.create(props.day);
+        con
+          .select_with_id(props.day, props.id)
+          .then((i) => {
+            if (i.length > 0) {
+              setTask(i[0].task);
+              setTime(i[0].time);
+              setStar(i[0].star);
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    db_con();
+  }, [props.day]);
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
   const [Task, setTask] = useState("");
-  let times = getInvervals();
+
+  useLayoutEffect(() => {
+    const db_con = async () => {
+      try {
+        await con.init();
+        con.create(props.day);
+        con.insert_values(props.day, props.id, Time, Task, Star);
+        if (Task) con.update_value(props.day, props.id, Time, Task, Star);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    db_con();
+  }, [Time, Task, Star]);
+
   return (
     <tr>
       <td>
@@ -104,12 +150,25 @@ function GetRows() {
     </tr>
   );
 }
-
 export default function Table(props: TableProps) {
   let rows = [];
-  // Get all rows and store into rows array
+  useLayoutEffect(() => {
+    const db_con = async () => {
+      try {
+        await con.init();
+        con.create(props.day);
+        con.count_day(props.day).then((i) => {
+          props.setRows(i[0].count || 1);
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    db_con();
+  }, [props.day]);
+
   for (let i = 0; i < props.rows; i++) {
-    rows.push(<GetRows key={i + 1} />);
+    rows.push(<GetRows id={i + 1} day={props.day} key={i + 1} />);
   }
   return (
     <table>
