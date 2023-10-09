@@ -1,7 +1,7 @@
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Connection from "../../lib/Data";
 
 type TableProps = {
@@ -57,7 +57,6 @@ type rowProps = {
   day: string;
 };
 
-let data_load: any;
 const con: Connection = new Connection();
 
 function GetRows(props: rowProps) {
@@ -71,17 +70,12 @@ function GetRows(props: rowProps) {
           .select_with_id(props.day, props.id)
           .then((i) => {
             if (i.length > 0) {
-              data_load = i;
-              console.log(i);
-              if (i[0].task) {
-                setTask(i[0].task);
-                setTime(i[0].time);
-                setStar(i[0].star);
-              }
+              setTask(i[0].task);
+              setTime(i[0].time);
+              setStar(i[0].star);
             }
           })
           .catch((e) => {
-            console.log(props.day);
             console.error(e);
           });
       } catch (error) {
@@ -89,7 +83,6 @@ function GetRows(props: rowProps) {
       }
     };
     db_con();
-    console.log(data_load);
   }, [props.day]);
   const [Time, setTime] = useState("12:00AM - 01:00AM");
   const [Star, setStar] = useState(false);
@@ -101,7 +94,7 @@ function GetRows(props: rowProps) {
         await con.init();
         con.create(props.day);
         con.insert_values(props.day, props.id, Time, Task, Star);
-        con.update_value(props.day, props.id, Time, Task, Star);
+        if (Task) con.update_value(props.day, props.id, Time, Task, Star);
       } catch (error) {
         console.error("Error:", error);
       }

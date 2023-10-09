@@ -6,7 +6,6 @@ import { useState } from "react";
 import Connection from "../lib/Data";
 export default function Builder() {
   const con: Connection = new Connection();
-  const [RemoveLast, setRemoveLast] = useState(false);
   const [Count, setCount] = useState(1);
   const [Day, setDay] = useState("");
   return (
