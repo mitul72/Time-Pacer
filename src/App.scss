@@ -15,7 +15,7 @@ nav {
   transition: width 200ms ease;
   z-index: 10;
 }
-
+.Builder{
 table input {
   margin: 0 !important;
   padding: 5px;
@@ -23,19 +23,6 @@ table input {
   height: 100%;
   background-color: var(--bg-secondary);
   border-radius: 0;
-}
-
-nav > * {
-  margin: 20px;
-}
-.navIconItem {
-  width: 30px;
-  height: 3px;
-  background-color: var(--text-secondary);
-  border-radius: 5px;
-}
-#task {
-  width: 55vw;
 }
 .star {
   width: 100px;
@@ -50,6 +37,40 @@ nav > * {
 AiFillStar,
 AiOutlineStar {
   margin: 0;
+}
+table,
+th,
+td {
+  border: 1px solid rgb(96, 94, 94);
+  border-collapse: collapse;
+}
+
+table {
+  margin-top: 2vh;
+}
+.star * {
+  cursor: pointer;
+}
+table select {
+  width: 170px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+td {
+  padding: 0 !important;
+}
+}
+nav > * {
+  margin: 20px;
+}
+.navIconItem {
+  width: 30px;
+  height: 3px;
+  background-color: var(--text-secondary);
+  border-radius: 5px;
+}
+#task {
+  width: 55vw;
 }
 
 .navIcon {
@@ -206,30 +227,10 @@ main {
   top: 7px;
   right: 10px;
 }
-table,
-th,
-td {
-  border: 1px solid rgb(96, 94, 94);
-  border-collapse: collapse;
-}
 
-table {
-  margin-top: 2vh;
-}
-.star * {
-  cursor: pointer;
-}
-table select {
-  width: 170px !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-}
 select::-webkit-scrollbar {
   display: none;
 }
 ::-webkit-scrollbar {
   display: none;
-}
-td {
-  padding: 0 !important;
 }

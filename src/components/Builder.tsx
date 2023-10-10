@@ -10,8 +10,8 @@ export default function Builder() {
   const [Day, setDay] = useState("");
   return (
     <div className="Builder">
-      <h1>SCHEDULE</h1>
-      <h2>Select Day</h2>
+      <h1 className="text-4xl my-10 font-bold">SCHEDULE</h1>
+      <h2 className="text-xl font-semibold mb-5">Select Day</h2>
       <div className="schedule-button add-row">
         <Dropdown day={Day} setDay={setDay} />
         <div className="buttons">
