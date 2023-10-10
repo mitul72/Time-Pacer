@@ -4,7 +4,6 @@ import { z } from "zod";
 import "./tasks.scss";
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
-import { UserNav } from "./components/user-nav";
 import { taskSchema } from "./data/schema";
 
 // Simulate a database read for tasks.
@@ -61,9 +60,6 @@ export default function TaskPage() {
             <p className="text-muted-foreground">
               Here&apos;s a list of your tasks for this month!
             </p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <UserNav />
           </div>
         </div>
         <DataTable data={tasks} columns={columns} />
