@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 11%;
+    --foreground: 214 32% 91%;
+    --card: 222 47% 11%;
+    --card-foreground: 214 32% 91%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 214 32% 91%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217 19% 27%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 76.9%;
+    --accent: 142 71% 45%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 19% 27%;
+    --input: 217 19% 27%;
+    --ring: 142 71% 45%;
+    --radius: 0.75rem;
+  }
+
+  .nature {
+    --background: 120 50% 97%;
+    --foreground: 120 30% 10%;
+    --card: 120 50% 98%;
+    --card-foreground: 120 30% 10%;
+    --popover: 120 50% 98%;
+    --popover-foreground: 120 30% 10%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 120 100% 98%;
+    --secondary: 120 30% 96%;
+    --secondary-foreground: 120 30% 10%;
+    --muted: 120 30% 96%;
+    --muted-foreground: 120 15% 40%;
+    --accent: 142 71% 45%;
+    --accent-foreground: 120 100% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 120 100% 98%;
+    --border: 120 30% 90%;
+    --input: 120 30% 90%;
+    --ring: 142 71% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.glass-effect {
+  @apply bg-green-950/30 backdrop-blur-sm border border-green-800/10;
+}
+
+.hover-effect {
+  @apply transition-all duration-200 hover:scale-[1.02];
+}
+
+.nature .glass-effect {
+  @apply bg-white/50 backdrop-blur-sm border border-green-200;
+}
+
+/* Custom colors */
+.task-hover {
+  @apply hover:bg-green-950/50;
+}
+
+.card-background {
+  @apply bg-[#1a202c];
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.glass-effect table {
+  @apply w-full border-collapse;
+}
+
+.glass-effect th,
+.glass-effect td {
+  @apply border border-green-800/20 p-2;
+}
+
+.glass-effect thead {
+  @apply bg-green-950/40;
+}
+
+.glass-effect tbody tr:nth-child(even) {
+  @apply bg-green-950/20;
+}
+
+.glass-effect tbody tr:hover {
+  @apply bg-green-950/30;
+}
+
