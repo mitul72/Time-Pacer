@@ -28,8 +28,65 @@ const days = [
   "Sunday",
 ];
 
+interface TimeWindow {
+  id: number;
+  timeSlot: string;
+  task: string;
+  isStarred: boolean;
+}
+
 export default function Schedule() {
   const [selectedDay, setSelectedDay] = useState("Wednesday");
+  const [timeWindows, setTimeWindows] = useState<TimeWindow[]>([
+    {
+      id: Date.now(),
+      timeSlot: timeSlots[0], // Set default to first time slot
+      task: "",
+      isStarred: false,
+    },
+  ]);
+
+  const handleAddTimeWindow = () => {
+    setTimeWindows([
+      ...timeWindows,
+      {
+        id: Date.now(),
+        timeSlot: timeSlots[0],
+        task: "",
+        isStarred: false,
+      },
+    ]);
+  };
+
+  const handleRemoveTimeWindow = () => {
+    if (timeWindows.length > 1) {
+      setTimeWindows(timeWindows.slice(0, -1));
+    }
+  };
+
+  const handleTimeSlotChange = (id: number, newTimeSlot: string) => {
+    setTimeWindows(
+      timeWindows.map((window) =>
+        window.id === id ? { ...window, timeSlot: newTimeSlot } : window
+      )
+    );
+  };
+
+  const handleTaskChange = (id: number, newTask: string) => {
+    setTimeWindows(
+      timeWindows.map((window) =>
+        window.id === id ? { ...window, task: newTask } : window
+      )
+    );
+  };
+
+  const handleToggleStar = (id: number) => {
+    setTimeWindows(
+      timeWindows.map((window) =>
+        window.id === id ? { ...window, isStarred: !window.isStarred } : window
+      )
+    );
+  };
 
   return (
     <div className="space-y-8 p-6 max-w-[1200px] mx-auto">
@@ -61,61 +118,85 @@ export default function Schedule() {
             <Button
               size="icon"
               className="w-12 h-12 rounded-xl bg-blue-600 hover:bg-blue-700 hover-effect"
+              onClick={handleAddTimeWindow}
             >
               <Plus className="h-6 w-6" />
             </Button>
             <Button
               size="icon"
               className="w-12 h-12 rounded-xl bg-red-600 hover:bg-red-700 hover-effect"
+              onClick={handleRemoveTimeWindow}
             >
               <Minus className="h-6 w-6" />
             </Button>
           </div>
         </div>
 
-        <div className="glass-effect rounded-xl p-6 space-y-4 hover-effect">
-          <div className="grid grid-cols-[250px_1fr_80px] gap-6 items-center">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">
-                Time Slot
-              </label>
-              <Select>
-                <SelectTrigger className="glass-effect">
-                  <Clock className="h-4 w-4 mr-2 text-blue-400" />
-                  <SelectValue placeholder="12:00AM - 01:00AM" />
-                </SelectTrigger>
-                <SelectContent className="bg-secondary/95 backdrop-blur-lg border-white/10">
-                  {timeSlots.map((slot) => (
-                    <SelectItem key={slot} value={slot}>
-                      {slot}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+        {timeWindows.map((window) => (
+          <div
+            key={window.id}
+            className="glass-effect rounded-xl p-6 space-y-4 hover-effect"
+          >
+            <div className="grid grid-cols-[250px_1fr_80px] gap-6 items-center">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">
+                  Time Slot
+                </label>
+                <Select
+                  value={window.timeSlot}
+                  onValueChange={(value) =>
+                    handleTimeSlotChange(window.id, value)
+                  }
+                >
+                  <SelectTrigger className="glass-effect">
+                    <Clock className="h-4 w-4 mr-2 text-blue-400" />
+                    <SelectValue placeholder="Select time slot">
+                      {/* Show default value if empty */}
+                      {window.timeSlot || "Select time slot"}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="bg-secondary/95 backdrop-blur-lg border-white/10">
+                    {timeSlots.map((slot) => (
+                      <SelectItem key={slot} value={slot}>
+                        {slot}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">
-                Task
-              </label>
-              <input
-                type="text"
-                placeholder="Enter task description..."
-                className="w-full h-10 rounded-lg glass-effect px-4 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
-            </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">
+                  Task
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter task description..."
+                  className="w-full h-10 rounded-lg glass-effect px-4 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  value={window.task}
+                  onChange={(e) => handleTaskChange(window.id, e.target.value)}
+                />
+              </div>
 
-            <div className="flex justify-end">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-10 w-10 rounded-lg hover:bg-white/10"
-              >
-                <Star className="h-5 w-5 text-yellow-400" />
-              </Button>
+              <div className="flex justify-end">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-lg hover:bg-white/10"
+                  onClick={() => handleToggleStar(window.id)}
+                >
+                  <Star
+                    className={`h-5 w-5 ${
+                      window.isStarred
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-yellow-400"
+                    }`}
+                  />
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

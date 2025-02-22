@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={inter.className}>
         <ThemeProvider>
           <SidebarProvider>
-            <div className="flex h-screen">
+            <div className="flex h-screen w-screen">
               <AppSidebar />
               <div className="flex-1 flex flex-col h-screen overflow-hidden">
                 <header className="flex justify-end p-4 border-b border-white/10">
